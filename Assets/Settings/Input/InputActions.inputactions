@@ -163,7 +163,7 @@
                 {
                     "name": "",
                     "id": "a3e66ef0-c760-4bcf-8bfb-86977c9dc0ef",
-                    "path": "<Pointer>/delta",
+                    "path": "<Mouse>/delta",
                     "interactions": "",
                     "processors": "DeltaTimeScale,ScaleVector2(x=0.1,y=0.1)",
                     "groups": ";Keyboard&Mouse",
