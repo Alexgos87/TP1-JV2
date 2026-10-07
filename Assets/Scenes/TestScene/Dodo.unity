@@ -1902,6 +1902,7 @@ GameObject:
   - component: {fileID: 1932701890}
   - component: {fileID: 1932701889}
   - component: {fileID: 1932701888}
+  - component: {fileID: 1932701893}
   m_Layer: 0
   m_Name: GameController
   m_TagString: GameController
@@ -1963,6 +1964,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObjectPools
   alien: {fileID: 0}
+  portal: {fileID: 0}
   alienExplosion: {fileID: 0}
 --- !u!114 &1932701892
 MonoBehaviour:
@@ -1976,6 +1978,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3459c154f694fd9b109b00e68d1eadd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EventChannels
+--- !u!114 &1932701893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1932701886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70f5a669c086d594a805c49fdba1cc4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PortalList
+  spawnInterval: 0.5
 --- !u!1001 &2007806699
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5537,9 +5552,10 @@ GameObject:
   - component: {fileID: 5490332717194048299}
   - component: {fileID: 787857908649944882}
   - component: {fileID: 5083848424392810798}
+  - component: {fileID: 5490332717194048300}
   m_Layer: 0
   m_Name: Portal
-  m_TagString: Untagged
+  m_TagString: Portal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7276,12 +7292,26 @@ Transform:
   m_GameObject: {fileID: 3811498614037630222}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -30, y: 5, z: 30}
+  m_LocalPosition: {x: -30, y: 16.4, z: 30}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5490332717194048300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3811498614037630222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52ad9ea3ff29fa043bbc045f71f59746, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnAlien
+  maxAlien: 20
+  Health: 10
 --- !u!1 &5508588818256613162
 GameObject:
   m_ObjectHideFlags: 0
