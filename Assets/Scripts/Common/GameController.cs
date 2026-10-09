@@ -1,18 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-
 
 public class GameController : MonoBehaviour
 {
+    [SerializeField] private int playerHealth = 50;
     [SerializeField] private float spawnInterval = 0.5f; // Intervalle entre chaque spawn
     private List<Portal> activePortals = new();
 
 
     /// <summary>
-    /// trouve tous les portails dans la scène et les stocke dans un tableau si il sont OnEnable
+    /// trouve tous les portails dans la scï¿½ne et les stocke dans un tableau si il sont OnEnable
     /// </summary>
     public void RegisterPortal(Portal portal)
     {
@@ -25,13 +21,23 @@ public class GameController : MonoBehaviour
     private void OnEnable()
     {
         StartCoroutine(SpawnAliensRoutine());
+        Finder.EventChannels.OnPlayerHealthChanged += OnPlayerHealthChanged;
     }
 
     private void OnDisable()
     {
         StopAllCoroutines();
+        var eventChannels = Finder.EventChannels;
+        if (eventChannels != null)
+            eventChannels.OnPlayerHealthChanged -= OnPlayerHealthChanged;
     }
 
+    private void OnPlayerHealthChanged(int _playerHealth)
+    {
+        this.playerHealth += _playerHealth;
+        Finder.EventChannels.PublishPlayerHealthChanged(this.playerHealth);
+    }
+}
     public void UnRegisterPortal(Portal portal)
     {
         if (activePortals.Contains(portal))
