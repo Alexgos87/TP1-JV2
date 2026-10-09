@@ -1,23 +1,14 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+
 
 public class GameController : MonoBehaviour
 {
     [SerializeField] private int playerHealth = 50;
     [SerializeField] private float spawnInterval = 0.5f; // Intervalle entre chaque spawn
     private List<Portal> activePortals = new();
-
-
-    /// <summary>
-    /// trouve tous les portails dans la sc�ne et les stocke dans un tableau si il sont OnEnable
-    /// </summary>
-    public void RegisterPortal(Portal portal)
-    {
-        if (!activePortals.Contains(portal))
-        {
-            activePortals.Add(portal);
-        }
-    }
-
+    
     private void OnEnable()
     {
         StartCoroutine(SpawnAliensRoutine());
@@ -37,7 +28,14 @@ public class GameController : MonoBehaviour
         this.playerHealth += _playerHealth;
         Finder.EventChannels.PublishPlayerHealthChanged(this.playerHealth);
     }
-}
+    
+    public void RegisterPortal(Portal portal)
+    {
+        if (!activePortals.Contains(portal))
+        {
+            activePortals.Add(portal);
+        }
+    }
     public void UnRegisterPortal(Portal portal)
     {
         if (activePortals.Contains(portal))
@@ -45,10 +43,7 @@ public class GameController : MonoBehaviour
             activePortals.Remove(portal);
         }
     }
-
-    /// <summary>
-    /// Toutes les 0.5 secondes, 1 alien sort du portail (en coroutine).
-    /// </summary>
+    
     private IEnumerator SpawnAliensRoutine()
     {
         var waitForSeconds = new WaitForSeconds(spawnInterval);

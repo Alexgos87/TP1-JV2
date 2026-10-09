@@ -28,15 +28,6 @@ public static class Finder
             return eventChannels;
         }
     }
-
-    public static GameController GameController
-    {
-        get
-        {
-            return FindWithTag<GameController>("GameController");
-        }
-    }
-
     public static ObjectPools ObjectPools
     {
         get
