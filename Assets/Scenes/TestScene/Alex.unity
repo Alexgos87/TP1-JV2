@@ -2055,7 +2055,7 @@ GameObject:
   - component: {fileID: 1548706722}
   m_Layer: 0
   m_Name: ObjectPools
-  m_TagString: Untagged
+  m_TagString: ObjectPools
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

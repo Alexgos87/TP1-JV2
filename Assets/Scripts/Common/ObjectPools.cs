@@ -12,6 +12,7 @@ public class ObjectPools : MonoBehaviour
 
     [Header("Projectiles")]
     [SerializeField] private ObjectPool bulletObjectPools;
+    [SerializeField] private ObjectPool BulletObjectPools;
 
     [Header("Alien")]
     [SerializeField] private ObjectPool AlienObjectPools;
@@ -28,12 +29,12 @@ public class ObjectPools : MonoBehaviour
     }
     
     // Entities
-    public ObjectPool Alien => instance.alien;
+    public ObjectPool Alien => alien;
 
     // Fx
-    public ObjectPool AlienExplosion => instance.alienExplosion;
     public ObjectPool AlienExplosion => alienExplosion;
 
+    public ObjectPool BulletObjectPool => bulletObjectPools != null ? bulletObjectPools : BulletObjectPools;
 
     // AlienPools
     public ObjectPool AlienObjectPool => AlienObjectPools;
