@@ -9,12 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4831301166243233135}
-  - component: {fileID: 2742129176660653429}
-  - component: {fileID: 3577509502462949494}
   - component: {fileID: 1004251030868337898}
   - component: {fileID: 2378353944350898439}
   - component: {fileID: 4626463076631187007}
   - component: {fileID: 6115350315474872875}
+  - component: {fileID: 1775249090876982778}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Untagged
@@ -37,34 +36,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2742129176660653429
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4405766785500949900}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5655d8af54f4b47addca474a69dc284, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Projectile
-  speed: 200
-  damage: 1
---- !u!114 &3577509502462949494
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4405766785500949900}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de51f03fde0d4dfdb3544427cc92660e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlaySoundOnEnable
-  audioClip: {fileID: 8300000, guid: 5601eca1dfa29004bb6fa92fb60c7feb, type: 3}
-  volume: 1
 --- !u!33 &1004251030868337898
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -170,3 +141,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1775249090876982778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4405766785500949900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ef56eee25c57194a9acc58166f72b43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::projectiles
+  speed: 200
+  damage: 1
+  Rayon_Collider: 0.5
+  moveAction: {fileID: 4714841854826018829, guid: 04cc15706f63de54b99fedd88a3cbe71,
+    type: 3}
