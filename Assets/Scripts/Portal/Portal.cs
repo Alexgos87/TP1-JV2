@@ -10,7 +10,7 @@ public class Portal : MonoBehaviour
     private void Awake()
     {
         // Sécurise la récupération : si ObjectPools ou Alien est null, alienPool sera null
-        alienPool = Finder.ObjectPools?.Alien;
+        alienPool = Finder.ObjectPools.Alien;
         if (alienPool == null)
         {
             Debug.LogError("Alien ObjectPool not found! Assurez-vous que l'objet 'GameController' possède le composant ObjectPools et que le champ 'Alien' est assigné.");
