@@ -1584,7 +1584,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0043bb2955065664a899011b50d9d021, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AlienAI
-  player: {fileID: 3829029035087176954, guid: f7ff6dc8cb691dc4586cdf26ac201419, type: 3}
+  player: {fileID: 0}
 --- !u!195 &8569805848914537728
 NavMeshAgent:
   m_ObjectHideFlags: 0
