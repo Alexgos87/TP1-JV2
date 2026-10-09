@@ -20,7 +20,7 @@ public class Portal : MonoBehaviour
         if (gameController != null)
             gameController.RegisterPortal(this);
         else
-            Debug.LogWarning("GameController introuvable dans OnEnable : portail non enregistré.", this);
+            Debug.LogWarning("GameController introuvable dans OnEnable : portail non enregistrï¿½.", this);
     }
 
     private void OnDisable()
