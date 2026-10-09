@@ -46,6 +46,7 @@ public class GameController : MonoBehaviour
     
     private IEnumerator SpawnAliensRoutine()
     {
+        Debug.Log("Starting SpawnAliensRoutine");
         var waitForSeconds = new WaitForSeconds(spawnInterval);
 
         while (true)
