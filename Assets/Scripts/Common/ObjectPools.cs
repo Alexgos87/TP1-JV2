@@ -12,21 +12,10 @@ public class ObjectPools : MonoBehaviour
 
     [Header("Projectiles")]
     [SerializeField] private ObjectPool BulletObjectPools;
-
-    
-    private static ObjectPools instance;
-    private static ObjectPools Instance
-    {
-        get
-        {
-            if (instance == null) instance = GameObject.FindWithTag("ObjectPools").GetComponent<ObjectPools>();
-            return instance;
-        }
-    }
     
     // Entities
-    public ObjectPool Alien => instance.alien;
+    public ObjectPool Alien => alien;
 
     // Fx
-    public ObjectPool AlienExplosion => instance.alienExplosion;
+    public ObjectPool AlienExplosion => alienExplosion;
 }
