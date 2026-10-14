@@ -1007,7 +1007,7 @@ GameObject:
   - component: {fileID: 876045466}
   - component: {fileID: 876045467}
   m_Layer: 0
-  m_Name: ProjectilesObjectPools
+  m_Name: BulletObjectPools
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1402,6 +1402,53 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1373586541}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1373927066
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1373927067}
+  - component: {fileID: 1373927068}
+  m_Layer: 0
+  m_Name: MissileObjectPools
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1373927067
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1373927066}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1814891694}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1373927068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1373927066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e6ac0904470b8940a5df4a2eb3bc31e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjectPool
+  prefab: {fileID: 7630230087308346905, guid: 7e4e8bd5ef788d642a1a3b66a5b0a31b, type: 3}
+  initialCount: 10
+  allowInstanciation: 1
 --- !u!1 &1416737688
 GameObject:
   m_ObjectHideFlags: 0
@@ -1900,6 +1947,7 @@ Transform:
   m_Children:
   - {fileID: 876045466}
   - {fileID: 1416737689}
+  - {fileID: 1373927067}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1899958111
@@ -2107,8 +2155,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObjectPools
   alien: {fileID: 0}
+  bullet: {fileID: 0}
   alienExplosion: {fileID: 0}
-  BulletObjectPools: {fileID: 0}
+  MissileObjectPools: {fileID: 0}
   AlienObjectPools: {fileID: 0}
 --- !u!114 &1932701892
 MonoBehaviour:
@@ -9112,8 +9161,12 @@ MonoBehaviour:
   speed: 25
   rotationSpeed: 30
   jumpHeight: 10
+  Healt: 50
   moveAction: {fileID: -888810244224002545, guid: 04cc15706f63de54b99fedd88a3cbe71,
     type: 3}
+  shootBulletAction: {fileID: 4714841854826018829, guid: 04cc15706f63de54b99fedd88a3cbe71,
+    type: 3}
+  spawnPoint: {fileID: 547562181188946387}
 --- !u!4 &7184087756630838571
 Transform:
   m_ObjectHideFlags: 0

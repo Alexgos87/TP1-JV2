@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class Portal : MonoBehaviour
+public class Portal : MonoBehaviour, IHurtable
 {
     [SerializeField] private int maxHealth = 10;
     [SerializeField] private int maxAlien = 20;          // Nombre max d'aliens actifs
-
+    private ObjectPool alienPool;
     private int health;
 
     public int Health
@@ -13,20 +13,24 @@ public class Portal : MonoBehaviour
         set => health = value;
     }
 
-    private ObjectPool alienPool;
 
-    private int health;
-    private ObjectPool alienPool;
 
-    private void Awake()
-    {
+
+
     private void Awake()
     {
         health = maxHealth;
-        alienPool = Finder.ObjectPools?.Alien;
+
+        if (Finder.ObjectPools == null)
+        {
+            Debug.LogError("Finder.ObjectPools est null (GameController introuvable, composant absent, ou Finder pas encore initialisé).");
+            return;
+        }
+
+        alienPool = Finder.ObjectPools.Alien;
         if (alienPool == null)
         {
-            Debug.LogError("Alien ObjectPool not found! Assurez-vous que l'objet 'GameController' possède le composant ObjectPools et que le champ 'Alien' est assigné.");
+            Debug.LogError("ObjectPools existe, mais le champ 'Alien' est null (non assigné ou pool pas encore créé).");
         }
     }
 
@@ -51,8 +55,6 @@ public class Portal : MonoBehaviour
 
     private void OnDisable()
     {
-    private void OnDisable()
-    {
         // Le GameController peut deja etre detruit (fin du Play mode / changement de scene)
         var gameController = Finder.GameController;
         if (gameController != null)
@@ -68,11 +70,16 @@ public class Portal : MonoBehaviour
 
     public void SpawnAlien()
     {
-        alienPool ??= Finder.ObjectPools?.AlienObjectPool;
+        alienPool ??= Finder.ObjectPools?.Alien;
         if (alienPool == null) return; // Defensive : évite les appels si le pool est manquant
         if (alienPool.ActiveCount < maxAlien)
         {
             alienPool.Place(transform.position);
         }
+    }
+
+    public void TakeDamage(float damage)
+    {
+        health -= Mathf.RoundToInt(damage);
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public class EventChannels : MonoBehaviour
 {
     [SerializeField] private UnityEvent<int> onPlayerHealthChanged = new();
-    [Header("projectile events")] 
+    [Header("projectile events")]
     [SerializeField] private UnityEvent<Bullet> onCollision = new();
 
     public event UnityAction<int> OnPlayerHealthChanged
@@ -19,15 +19,5 @@ public class EventChannels : MonoBehaviour
     {
         onPlayerHealthChanged.Invoke(playerHealth);
     }
-
-    public event UnityAction<Bullet> OnCollision
-    {
-        add => onCollision.AddListener(value);
-        remove => onCollision.RemoveListener(value);
-    }
-
-    public void PublishBulletCollision(Bullet bullet)
-    {
-        onCollision.Invoke(bullet);
-    }
+   
 }

@@ -28,6 +28,8 @@ public class SpaceMarineAnimations : MonoBehaviour
         UpdateMouvementAnimations();
     }
 
+
+
     private void UpdateMouvementAnimations()
     {
         var normalizedSpeed = Mathf.InverseLerp(0, maximumSpeed, characterController.velocity.magnitude);

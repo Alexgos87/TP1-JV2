@@ -6,15 +6,22 @@ public static class Finder
 {
     private static EventChannels eventChannels;
     private static ObjectPools objectPools;
-    
+
     private static GameController gameController;
-    
+
     public static GameController GameController
     {
         get
         {
             if (gameController == null)
                 gameController = Object.FindAnyObjectByType<GameController>();
+
+            if (gameController == null)
+            {
+                var gameControllerObject = new GameObject("GameController (Runtime)");
+                gameController = gameControllerObject.AddComponent<GameController>();
+            }
+
             return gameController;
         }
     }
@@ -33,7 +40,8 @@ public static class Finder
         get
         {
             if (objectPools == null)
-                objectPools = FindWithTag<ObjectPools>("GameController");
+                objectPools = FindWithTag<ObjectPools>("ObjectPools")
+                    ?? Object.FindAnyObjectByType<ObjectPools>();
             return objectPools;
         }
     }

@@ -27,9 +27,19 @@
                     "priority": 0
                 },
                 {
-                    "name": "shoot",
+                    "name": "shoot_Bullet",
                     "type": "Button",
                     "id": "327ffee0-3958-45e6-a2f5-f7a0dff959b2",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
+                    "name": "Shoot_Missile",
+                    "type": "Button",
+                    "id": "3bd66f7b-f5e4-4ead-9745-34668958ca1f",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -199,18 +209,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "shoot",
+                    "action": "shoot_Bullet",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "c8cd5faa-5b9c-4025-b222-f73ce0444832",
+                    "id": "37beff2a-c29d-4aad-b9b1-7545752155b1",
                     "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "shoot",
+                    "action": "Shoot_Missile",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

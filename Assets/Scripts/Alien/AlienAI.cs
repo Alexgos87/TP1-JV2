@@ -8,11 +8,29 @@ public class AlienAI : MonoBehaviour
     
     private void Awake()
     {
-        agent  = GetComponent<NavMeshAgent>();
+        agent = GetComponent<NavMeshAgent>();
+        FindPlayer();
+    }
+
+    private void OnEnable()
+    {
+        FindPlayer();
+    }
+
+    private void FindPlayer()
+    {
+        if (player == null)
+            player = FindAnyObjectByType<SpaceMarinePlayer>()?.gameObject;
     }
     
-    void Update()
+    private void Update()
     {
+        if (agent == null || player == null)
+        {
+            FindPlayer();
+            return;
+        }
+
         agent.SetDestination(player.transform.position);
     }
 }

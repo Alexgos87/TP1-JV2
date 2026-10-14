@@ -2,17 +2,67 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class GameController : MonoBehaviour
 {
     [SerializeField] private int playerHealth = 50;
     [SerializeField] private float spawnInterval = 0.5f; // Intervalle entre chaque spawn
     private List<Portal> activePortals = new();
-    
+
+    private static bool s_isQuitting;
+
+    public static bool IsQuitting => s_isQuitting;
+
+    private void Awake()
+    {
+        // Evite les doublons si vous avez plusieurs GameController dans la scène
+        var others = FindObjectsOfType<GameController>();
+        if (others.Length > 1)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        // Décommenter si vous souhaitez que ce GameObject survive entre les scènes
+        // DontDestroyOnLoad(gameObject);
+
+        // Tentative de s'assurer que l'objet possède le bon tag (ignore si le tag n'existe pas)
+        if (gameObject.tag != "GameController")
+        {
+            try
+            {
+                gameObject.tag = "GameController";
+            }
+            catch
+            {
+                // Le tag "GameController" n'existe pas dans le projet — créez-le manuellement si besoin.
+            }
+        }
+    }
+
+    private void OnApplicationQuit()
+    {
+        s_isQuitting = true;
+    }
+
+    private void OnDestroy()
+    {
+        // Si l'application est en train de quitter, ne recréez rien ici.
+        if (s_isQuitting) return;
+
+        // Placez ici le nettoyage qui n'instancie pas de nouveaux GameObjects.
+    }
+
     private void OnEnable()
     {
+
+        foreach (var portal in FindObjectsByType<Portal>(FindObjectsSortMode.None))
+            RegisterPortal(portal);
+
         StartCoroutine(SpawnAliensRoutine());
-        Finder.EventChannels.OnPlayerHealthChanged += OnPlayerHealthChanged;
+
+        var eventChannels = Finder.EventChannels;
+        if (eventChannels != null)
+            eventChannels.OnPlayerHealthChanged += OnPlayerHealthChanged;
     }
 
     private void OnDisable()
