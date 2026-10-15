@@ -155,6 +155,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::projectiles
   speed: 200
   damage: 1
-  Rayon_Collider: 0.5
-  moveAction: {fileID: 4714841854826018829, guid: 04cc15706f63de54b99fedd88a3cbe71,
-    type: 3}

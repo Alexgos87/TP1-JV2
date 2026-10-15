@@ -6,7 +6,6 @@ public class ObjectPools : MonoBehaviour
 {
     [Header("Entities")]
     [SerializeField] private ObjectPool alien;
-    [SerializeField] private ObjectPool bullet; // ajouter ceci
 
     [Header("Fx")]
     [SerializeField] private ObjectPool alienExplosion;
@@ -30,7 +29,6 @@ public class ObjectPools : MonoBehaviour
     
     // Entities
     public ObjectPool Alien => alien != null ? alien : AlienObjectPools;
-    public ObjectPool BulletObjectPool => bullet; // exposer le pool de balles
 
     // Fx
     public ObjectPool AlienExplosion => alienExplosion;

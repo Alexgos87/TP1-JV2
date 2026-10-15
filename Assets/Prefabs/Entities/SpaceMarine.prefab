@@ -2040,6 +2040,15 @@ MonoBehaviour:
   jumpHeight: 10
   moveAction: {fileID: -888810244224002545, guid: 04cc15706f63de54b99fedd88a3cbe71,
     type: 3}
+  shootBulletAction: {fileID: 4714841854826018829, guid: 04cc15706f63de54b99fedd88a3cbe71,
+    type: 3}
+  shootMissileAction: {fileID: 7463472927447181841, guid: 04cc15706f63de54b99fedd88a3cbe71,
+    type: 3}
+  bulletPrefab: {fileID: 4405766785500949900, guid: e45afdc2b81e8b2418dcd8bb0a54b32e,
+    type: 3}
+  missilePrefab: {fileID: 7630230087308346905, guid: 7e4e8bd5ef788d642a1a3b66a5b0a31b,
+    type: 3}
+  spawnpoint: {fileID: 0}
 --- !u!1 &4063720449136232020
 GameObject:
   m_ObjectHideFlags: 0

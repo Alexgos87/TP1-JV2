@@ -6,6 +6,11 @@ public class GameController : MonoBehaviour
 {
     [SerializeField] private int playerHealth = 50;
     [SerializeField] private float spawnInterval = 0.5f; // Intervalle entre chaque spawn
+
+    [Header("Projectiles")]
+    [SerializeField] private int maxMissiles = 10; // Nombre maximum de missiles actifs
+    [SerializeField] private int missilesNumber = 10; // nombre de missiles actuellement actifs
+
     private List<Portal> activePortals = new();
 
     private static bool s_isQuitting;
@@ -96,7 +101,6 @@ public class GameController : MonoBehaviour
     
     private IEnumerator SpawnAliensRoutine()
     {
-        Debug.Log("Starting SpawnAliensRoutine");
         var waitForSeconds = new WaitForSeconds(spawnInterval);
 
         while (true)
@@ -109,6 +113,34 @@ public class GameController : MonoBehaviour
 
             yield return waitForSeconds;
         }
+    }
+
+    public void getMisslesAvaible()
+    {
+        if (missilesNumber < maxMissiles)
+        {
+            missilesNumber++;
+            Finder.EventChannels.PublishMissilesChanged(missilesNumber);
+        }
+    }
+
+    public void useMissles()
+    {
+        if (missilesNumber > 0)
+        {
+            missilesNumber--;
+            Finder.EventChannels.PublishMissilesChanged(missilesNumber);
+        }
+    }
+
+    public bool canUseMissiles()
+    {
+        return missilesNumber > 0;
+    }
+
+    public int getMissilesLeft()
+    {
+        return missilesNumber;
     }
 }
 
