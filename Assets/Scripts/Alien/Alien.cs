@@ -8,14 +8,14 @@ public class Alien : MonoBehaviour, IHurtable
     {
         Finder.EventChannels.OnGameEnded += OnGameEnded;
     }
-    
+
     private void OnDisable()
     {
         var eventChannels = Finder.EventChannels;
         if (eventChannels != null)
             eventChannels.OnGameEnded -= OnGameEnded;
     }
-    
+
     private void OnCollisionEnter(Collision collision)
     {
         if (!collision.gameObject.CompareTag("Player")) return;

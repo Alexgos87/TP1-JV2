@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class SpaceMarineHealth : MonoBehaviour, IHurtable
@@ -11,6 +12,8 @@ public class SpaceMarineHealth : MonoBehaviour, IHurtable
 
     private int health;
 
+
+    private bool isInvulnerable = false;
     private bool IsDead => health <= 0;
 
     private AudioSource audioSource;
@@ -28,15 +31,48 @@ public class SpaceMarineHealth : MonoBehaviour, IHurtable
 
     public void TakeDamage(int damage)
     {
-        if (IsDead) return;
+        if (IsDead || isInvulnerable) return;
+
         health = Mathf.Max(health - damage, 0);
         Finder.EventChannels.PublishPlayerHealthChanged(health);
-        audioSource.PlayOneShot(hurtSound);
+
+        if (audioSource != null && hurtSound != null)
+            audioSource.PlayOneShot(hurtSound);
 
         if (IsDead)
         {
-            audioSource.PlayOneShot(deathSound);
+            if (audioSource != null && deathSound != null)
+                audioSource.PlayOneShot(deathSound);
+
             Finder.EventChannels.PublishGameEnded(false);
+
         }
+    }
+    public void Heal()
+    {
+        health = Mathf.Min(health + 25, maxHealth);
+        Finder.EventChannels.PublishPlayerHealthChanged(health);
+    }
+    public void ActivateArmor()
+    {
+        StartCoroutine(InvulnerabilityCoroutine());
+    }
+
+    private IEnumerator InvulnerabilityCoroutine()
+    {
+        isInvulnerable = true;
+
+        yield return new WaitForSeconds(5f);
+
+        isInvulnerable = false;
+    }
+    public void ResetHealth()
+    {
+        health = startHealth;
+        isInvulnerable = false;
+
+        StopAllCoroutines();
+
+        Finder.EventChannels.PublishPlayerHealthChanged(health);
     }
 }

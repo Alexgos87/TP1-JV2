@@ -4,116 +4,188 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
-    [SerializeField] private float spawnInterval = 0.5f; // Intervalle entre chaque spawn
+    [SerializeField] private float spawnInterval = 0.5f;
 
     [Header("Projectiles")]
-    [SerializeField] private int maxMissiles = 10; // Nombre maximum de missiles actifs
-    [SerializeField] private int missilesNumber = 10; // nombre de missiles actuellement actifs
+    [SerializeField] private int maxMissiles = 10;
+    [SerializeField] private int missilesNumber = 10;
 
-    private List<Portal> activePortals = new();
+    private readonly List<Portal> activePortals = new();
+
     private bool isGameOver;
+    private bool isRestarting;
 
     private void Awake()
     {
-        // Evite les doublons si vous avez plusieurs GameController dans la sc�ne
-        var others = FindObjectsByType<GameController>();
+        var others = FindObjectsByType<GameController>(
+            FindObjectsSortMode.None
+        );
+
         if (others.Length > 1)
         {
             Destroy(gameObject);
             return;
         }
-
-        // D�commenter si vous souhaitez que ce GameObject survive entre les sc�nes
-        // DontDestroyOnLoad(gameObject);
-
-        // Tentative de s'assurer que l'objet poss�de le bon tag (ignore si le tag n'existe pas)
-        if (gameObject.CompareTag("GameController"))
-        {
-            try
-            {
-                gameObject.tag = "GameController";
-            }
-            catch
-            {
-                // Le tag "GameController" n'existe pas dans le projet � cr�ez-le manuellement si besoin.
-            }
-        }
     }
-    
+
     private void Start()
     {
-        Finder.EventChannels.PublishMissilesChanged(missilesNumber);
+        var eventChannels = Finder.EventChannels;
+
+        if (eventChannels != null)
+            eventChannels.PublishMissilesChanged(missilesNumber);
     }
 
     private void OnEnable()
     {
-        foreach (var portal in FindObjectsByType<Portal>(FindObjectsSortMode.None))
-            RegisterPortal(portal);
+        var eventChannels = Finder.EventChannels;
 
-        StartCoroutine(SpawnAliensRoutine());
-        
-        Finder.EventChannels.OnGameEnded += OnGameEnded;
+        if (eventChannels != null)
+            eventChannels.OnGameEnded += OnGameEnded;
+
+        RefreshPortals();
+
+        if (!isGameOver)
+            StartCoroutine(SpawnAliensRoutine());
     }
 
     private void OnDisable()
     {
         StopAllCoroutines();
+
         var eventChannels = Finder.EventChannels;
+
         if (eventChannels != null)
             eventChannels.OnGameEnded -= OnGameEnded;
     }
-    
+
+    private void RefreshPortals()
+    {
+        activePortals.Clear();
+
+        foreach (var portal in FindObjectsByType<Portal>(
+                     FindObjectsSortMode.None))
+        {
+            RegisterPortal(portal);
+        }
+    }
+
     public void RegisterPortal(Portal portal)
     {
-        if (!activePortals.Contains(portal))
-        {
+        if (portal != null && !activePortals.Contains(portal))
             activePortals.Add(portal);
-        }
     }
+
     public void UnRegisterPortal(Portal portal)
     {
-        if (activePortals.Contains(portal))
+        if (portal == null || isGameOver || isRestarting)
+            return;
+
+        activePortals.Remove(portal);
+
+        if (activePortals.Count == 0)
         {
-            activePortals.Remove(portal);
-            if (activePortals.Count == 0 && !isGameOver)
-                Finder.EventChannels.PublishGameEnded(true);
+            Finder.EventChannels?.PublishGameEnded(true);
         }
     }
-    
-    private IEnumerator SpawnAliensRoutine()
+
+    public void AddMissiles()
     {
-        var waitForSeconds = new WaitForSeconds(spawnInterval);
+        if (isGameOver)
+            return;
 
-        while (true)
-        {
-            if (activePortals.Count > 0)
-            {
-                var selectedPortal = activePortals[Random.Range(0, activePortals.Count)];
-                selectedPortal.SpawnAlien();
-            }
-
-            yield return waitForSeconds;
-        }
+        missilesNumber = Mathf.Min(missilesNumber + 5, maxMissiles);
+        Finder.EventChannels?.PublishMissilesChanged(missilesNumber);
     }
 
     public void UseMissiles()
     {
-        if (missilesNumber > 0)
-        {
-            missilesNumber--;
-            Finder.EventChannels.PublishMissilesChanged(missilesNumber);
-        }
+        if (isGameOver || missilesNumber <= 0)
+            return;
+
+        missilesNumber--;
+        Finder.EventChannels?.PublishMissilesChanged(missilesNumber);
     }
 
     public bool CanUseMissiles()
     {
-        return missilesNumber > 0;
+        return !isGameOver && missilesNumber > 0;
     }
-    
+
+    private IEnumerator SpawnAliensRoutine()
+    {
+        var wait = new WaitForSeconds(spawnInterval);
+
+        while (!isGameOver)
+        {
+            if (activePortals.Count > 0)
+            {
+                int index = Random.Range(0, activePortals.Count);
+                Portal portal = activePortals[index];
+
+                if (portal != null)
+                    portal.SpawnAlien();
+            }
+
+            yield return wait;
+        }
+    }
+
     private void OnGameEnded(bool isVictory)
     {
+        if (isGameOver)
+            return;
+
         isGameOver = true;
         StopAllCoroutines();
     }
-}
 
+    public void RestartGame()
+    {
+        if (isRestarting)
+            return;
+
+        isRestarting = true;
+        StopAllCoroutines();
+
+        // Empêcher les portails de déclencher une victoire
+        // pendant leur réactivation.
+        isGameOver = true;
+
+        // Réinitialiser le joueur.
+        SpaceMarineDeath playerDeath =
+            FindFirstObjectByType<SpaceMarineDeath>();
+
+        if (playerDeath != null)
+            playerDeath.ResetPlayer();
+
+        // Réinitialiser les portails.
+        activePortals.Clear();
+
+        foreach (Portal portal in FindObjectsByType<Portal>(
+                     FindObjectsSortMode.None))
+        {
+            if (portal != null)
+                portal.ResetPortal();
+        }
+
+        // Réinitialiser les munitions.
+        missilesNumber = maxMissiles;
+        Finder.EventChannels?.PublishMissilesChanged(missilesNumber);
+
+        // Réinitialiser l'état de la partie.
+        isGameOver = false;
+        isRestarting = false;
+
+        // Relancer le spawn des aliens.
+        StartCoroutine(SpawnAliensRoutine());
+
+        Debug.Log("GameController : partie réinitialisée.");
+    }
+    public void QuitGame()
+    {
+        Application.Quit();
+
+        UnityEditor.EditorApplication.isPlaying = false;
+    }
+}
