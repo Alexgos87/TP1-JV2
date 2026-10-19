@@ -26,15 +26,7 @@ public class SpaceMarineHealth : MonoBehaviour, IHurtable
 
         if (IsDead)
         {
-            // TODO : game over
+            Finder.EventChannels.PublishGameEnded(false);
         }
-    }
-
-    public void Heal(int amount)
-    {
-        if (IsDead) return;
-
-        health = Mathf.Min(health + amount, maxHealth);
-        Finder.EventChannels.PublishPlayerHealthChanged(health);
     }
 }

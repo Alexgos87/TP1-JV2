@@ -11,10 +11,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private int missilesNumber = 10; // nombre de missiles actuellement actifs
 
     private List<Portal> activePortals = new();
-
-    private static bool s_isQuitting;
-
-    public static bool IsQuitting => s_isQuitting;
+    private bool isGameOver;
 
     private void Awake()
     {
@@ -43,31 +40,22 @@ public class GameController : MonoBehaviour
         }
     }
 
-    private void OnApplicationQuit()
-    {
-        s_isQuitting = true;
-    }
-
-    private void OnDestroy()
-    {
-        // Si l'application est en train de quitter, ne recr�ez rien ici.
-        if (s_isQuitting) return;
-
-        // Placez ici le nettoyage qui n'instancie pas de nouveaux GameObjects.
-    }
-
     private void OnEnable()
     {
-
         foreach (var portal in FindObjectsByType<Portal>(FindObjectsSortMode.None))
             RegisterPortal(portal);
 
         StartCoroutine(SpawnAliensRoutine());
+        
+        Finder.EventChannels.OnGameEnded += OnGameEnded;
     }
 
     private void OnDisable()
     {
         StopAllCoroutines();
+        var eventChannels = Finder.EventChannels;
+        if (eventChannels != null)
+            eventChannels.OnGameEnded -= OnGameEnded;
     }
     
     public void RegisterPortal(Portal portal)
@@ -82,6 +70,8 @@ public class GameController : MonoBehaviour
         if (activePortals.Contains(portal))
         {
             activePortals.Remove(portal);
+            if (activePortals.Count == 0 && !isGameOver)
+                Finder.EventChannels.PublishGameEnded(true);
         }
     }
     
@@ -113,6 +103,12 @@ public class GameController : MonoBehaviour
     public bool canUseMissiles()
     {
         return missilesNumber > 0;
+    }
+    
+    private void OnGameEnded(bool isVictory)
+    {
+        isGameOver = true;
+        StopAllCoroutines();
     }
 }
 

@@ -49,6 +49,18 @@ public class SpaceMarinePlayer : MonoBehaviour
             Debug.LogError("ObjectPools existe, mais le champ 'MissileObjectPool' est null (non assigné ou pool pas encore créé).");
         }
     }
+    
+    private void OnEnable()
+    {
+        Finder.EventChannels.OnGameEnded += OnGameEnded;
+    }
+
+    private void OnDisable()
+    {
+        var eventChannels = Finder.EventChannels;
+        if (eventChannels != null)
+            eventChannels.OnGameEnded -= OnGameEnded;
+    }
 
     private void Update()
     {
@@ -161,5 +173,11 @@ public class SpaceMarinePlayer : MonoBehaviour
                 }  
             }
         }
+    }
+    
+    private void OnGameEnded(bool isVictory)
+    {
+        if (!isVictory)
+            enabled = false;
     }
 }

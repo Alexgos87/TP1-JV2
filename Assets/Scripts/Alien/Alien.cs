@@ -4,6 +4,18 @@ public class Alien : MonoBehaviour, IHurtable
 {
     [SerializeField] private int damageToPlayer = 10;
 
+    private void OnEnable()
+    {
+        Finder.EventChannels.OnGameEnded += OnGameEnded;
+    }
+    
+    private void OnDisable()
+    {
+        var eventChannels = Finder.EventChannels;
+        if (eventChannels != null)
+            eventChannels.OnGameEnded -= OnGameEnded;
+    }
+    
     private void OnCollisionEnter(Collision collision)
     {
         if (!collision.gameObject.CompareTag("Player")) return;
@@ -22,5 +34,11 @@ public class Alien : MonoBehaviour, IHurtable
     {
         Finder.ObjectPools.Alien.Release(gameObject);
         gameObject.SetActive(false);
+    }
+    
+    private void OnGameEnded(bool isVictory)
+    {
+        if (isVictory)
+            Die();
     }
 }
