@@ -1,10 +1,16 @@
-using System;
+
+using Assets.Scripts.Common.Collectables;
 using UnityEngine;
 
 public class Portal : MonoBehaviour, IHurtable
 {
+    [Header("Portal Settings")]
     [SerializeField] private int maxHealth = 10;
-    [SerializeField] private int maxAlien = 20;          // Nombre max d'aliens actifs
+    [SerializeField] private int maxAlien = 20;
+
+    [Header("Collectables")]
+    [SerializeField] private CollectablesSpawner collectablesSpawner;
+
     private ObjectPool alienPool;
     private int health;
 
@@ -14,32 +20,21 @@ public class Portal : MonoBehaviour, IHurtable
         set => health = value;
     }
 
-
-
-
-
     private void Awake()
     {
         health = maxHealth;
 
         if (Finder.ObjectPools == null)
         {
-            Debug.LogError("Finder.ObjectPools est null (GameController introuvable, composant absent, ou Finder pas encore initialisé).");
+            Debug.LogError("Finder.ObjectPools est null.");
             return;
         }
 
         alienPool = Finder.ObjectPools.Alien;
+
         if (alienPool == null)
         {
-            Debug.LogError("ObjectPools existe, mais le champ 'Alien' est null (non assigné ou pool pas encore créé).");
-        }
-    }
-
-    private void Update()
-    {
-        if (Health <= 0)
-        {
-            this.gameObject.SetActive(false);
+            Debug.LogError("La pool Alien est null.");
         }
     }
 
@@ -48,39 +43,64 @@ public class Portal : MonoBehaviour, IHurtable
         health = maxHealth;
 
         var gameController = Finder.GameController;
+
         if (gameController != null)
             gameController.RegisterPortal(this);
-        else
-            Debug.LogWarning("GameController introuvable dans OnEnable : portail non enregistr�.", this);
     }
 
     private void OnDisable()
     {
-        // Le GameController peut deja etre detruit (fin du Play mode / changement de scene)
         var gameController = Finder.GameController;
+
         if (gameController != null)
             gameController.UnRegisterPortal(this);
     }
 
     public void TakeDamage(int amount)
     {
-        health -= amount;
+        ApplyDamage(amount);
+    }
+
+    public void TakeDamage(float damage)
+    {
+        ApplyDamage(Mathf.RoundToInt(damage));
+    }
+
+    private void ApplyDamage(int amount)
+    {
         if (health <= 0)
-            gameObject.SetActive(false);
+            return;
+
+        health -= amount;
+
+        if (health <= 0)
+        {
+            health = 0;
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        Debug.Log("Portal mort");
+
+        collectablesSpawner.SpawnRandomCollectable(transform.position);
+
+        Debug.Log("Spawn du collectible demandé");
+
+        gameObject.SetActive(false);
     }
 
     public void SpawnAlien()
     {
         alienPool ??= Finder.ObjectPools?.Alien;
-        if (alienPool == null) return; // Defensive : évite les appels si le pool est manquant
+
+        if (alienPool == null)
+            return;
+
         if (alienPool.ActiveCount < maxAlien)
         {
             alienPool.Place(transform.position);
         }
-    }
-
-    public void TakeDamage(float damage)
-    {
-        health -= Mathf.RoundToInt(damage);
     }
 }
