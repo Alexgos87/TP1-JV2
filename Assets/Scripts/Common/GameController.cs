@@ -39,6 +39,11 @@ public class GameController : MonoBehaviour
             }
         }
     }
+    
+    private void Start()
+    {
+        Finder.EventChannels.PublishMissilesChanged(missilesNumber);
+    }
 
     private void OnEnable()
     {
