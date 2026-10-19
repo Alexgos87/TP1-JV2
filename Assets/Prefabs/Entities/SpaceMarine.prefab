@@ -1935,6 +1935,8 @@ GameObject:
   - component: {fileID: 3354190825139122232}
   - component: {fileID: 714857434113621926}
   - component: {fileID: 5545285159138065838}
+  - component: {fileID: 7503245310737277860}
+  - component: {fileID: 8356389352513026036}
   m_Layer: 0
   m_Name: SpaceMarine
   m_TagString: Player
@@ -2045,6 +2047,43 @@ MonoBehaviour:
   shootMissileAction: {fileID: 7463472927447181841, guid: 04cc15706f63de54b99fedd88a3cbe71,
     type: 3}
   projectileSpawnPoint: {fileID: 0}
+--- !u!114 &7503245310737277860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3829029035087176954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 201cc149c0f6dcd4e98b7312c972614c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceMarineHealth
+  startHealth: 50
+  maxHealth: 100
+--- !u!136 &8356389352513026036
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3829029035087176954}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 3
+  m_Height: 11
+  m_Direction: 1
+  m_Center: {x: 0, y: 5.7, z: 0}
 --- !u!1 &4063720449136232020
 GameObject:
   m_ObjectHideFlags: 0

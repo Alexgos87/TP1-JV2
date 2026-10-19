@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
-    [SerializeField] private int playerHealth = 50;
     [SerializeField] private float spawnInterval = 0.5f; // Intervalle entre chaque spawn
 
     [Header("Projectiles")]
@@ -64,23 +63,11 @@ public class GameController : MonoBehaviour
             RegisterPortal(portal);
 
         StartCoroutine(SpawnAliensRoutine());
-
-        var eventChannels = Finder.EventChannels;
-        if (eventChannels != null)
-            eventChannels.OnPlayerHealthChanged += OnPlayerHealthChanged;
     }
 
     private void OnDisable()
     {
         StopAllCoroutines();
-        var eventChannels = Finder.EventChannels;
-        if (eventChannels != null)
-            eventChannels.OnPlayerHealthChanged -= OnPlayerHealthChanged;
-    }
-
-    private void OnPlayerHealthChanged(int _playerHealth)
-    {
-        this.playerHealth += _playerHealth;
     }
     
     public void RegisterPortal(Portal portal)
@@ -114,15 +101,6 @@ public class GameController : MonoBehaviour
         }
     }
 
-    public void getMisslesAvaible()
-    {
-        if (missilesNumber < maxMissiles)
-        {
-            missilesNumber++;
-            Finder.EventChannels.PublishMissilesChanged(missilesNumber);
-        }
-    }
-
     public void useMissles()
     {
         if (missilesNumber > 0)
@@ -135,11 +113,6 @@ public class GameController : MonoBehaviour
     public bool canUseMissiles()
     {
         return missilesNumber > 0;
-    }
-
-    public int getMissilesLeft()
-    {
-        return missilesNumber;
     }
 }
 

@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class HealthUI : MonoBehaviour
 {
-    [SerializeField] private int digits = 7;
-
     private TMP_Text text;
 
     private void Awake()
@@ -14,18 +12,18 @@ public class HealthUI : MonoBehaviour
 
     private void OnEnable()
     {
-        Finder.EventChannels.OnPlayerHealthChanged += UpdateScore;
+        Finder.EventChannels.OnPlayerHealthChanged += UpdateHealth;
     }
     
     private void OnDisable()
     {
         var eventChannels = Finder.EventChannels;
         if (eventChannels != null)
-            eventChannels.OnPlayerHealthChanged -= UpdateScore;
+            eventChannels.OnPlayerHealthChanged -= UpdateHealth;
     }
 
-    private void UpdateScore(int score)
+    private void UpdateHealth(int health)
     {
-        text.text = score.ToString().PadLeft(digits, '0');
+        text.text = health.ToString();
     }
 }
