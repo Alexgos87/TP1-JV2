@@ -1,16 +1,15 @@
 using UnityEngine;
 
-public class Alien : MonoBehaviour
+public class Alien : MonoBehaviour, IHurtable
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void TakeDamage(int damage)
     {
-        
+        Die();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Die()
     {
-        
+        Finder.ObjectPools.Alien.Release(gameObject);
+        gameObject.SetActive(false);
     }
 }

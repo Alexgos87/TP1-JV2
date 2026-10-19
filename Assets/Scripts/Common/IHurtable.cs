@@ -1,5 +1,5 @@
 ﻿public interface IHurtable
 {
-    void TakeDamage(float damage);
+    void TakeDamage(int damage);
 }
 

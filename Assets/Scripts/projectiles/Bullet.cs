@@ -9,7 +9,7 @@ public class Bullet : MonoBehaviour
 {
     [Header("Projectile Settings")]
     [SerializeField] private float speed = 200; // Speed of the projectile
-    [SerializeField] private float damage = 1; // Damage of the projectile
+    [SerializeField] private int damage = 1; // Damage of the projectile
 
 
     private void FixedUpdate()
@@ -23,7 +23,7 @@ public class Bullet : MonoBehaviour
     }
 
     /// <summary>
-    /// Déclanche un événement lorsqu'un projectile entre en collision avec un ennemi. Applique des dégâts à l'ennemi et détruit le projectile après la collision.
+    /// Dï¿½clanche un ï¿½vï¿½nement lorsqu'un projectile entre en collision avec un ennemi. Applique des dï¿½gï¿½ts ï¿½ l'ennemi et dï¿½truit le projectile aprï¿½s la collision.
     /// </summary>
     /// <param name="other">objet avec lequel le projectile entre en collision</param>
     private void OnTriggerEnter(Collider other)
@@ -32,12 +32,12 @@ public class Bullet : MonoBehaviour
         if (other.TryGetComponent<IHurtable>(out IHurtable hurtable))
         {
             hurtable.TakeDamage(damage);
-            Destroy(gameObject);
+            Finder.ObjectPools.BulletObjectPools.Release(gameObject);
         }
         else
         {
             // If it doesn't, destroy the projectile
-            Destroy(gameObject);
+            Finder.ObjectPools.BulletObjectPools.Release(gameObject);
         }
     }
 

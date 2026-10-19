@@ -19,7 +19,7 @@ public class GameController : MonoBehaviour
 
     private void Awake()
     {
-        // Evite les doublons si vous avez plusieurs GameController dans la scène
+        // Evite les doublons si vous avez plusieurs GameController dans la scï¿½ne
         var others = FindObjectsOfType<GameController>();
         if (others.Length > 1)
         {
@@ -27,10 +27,10 @@ public class GameController : MonoBehaviour
             return;
         }
 
-        // Décommenter si vous souhaitez que ce GameObject survive entre les scènes
+        // Dï¿½commenter si vous souhaitez que ce GameObject survive entre les scï¿½nes
         // DontDestroyOnLoad(gameObject);
 
-        // Tentative de s'assurer que l'objet possède le bon tag (ignore si le tag n'existe pas)
+        // Tentative de s'assurer que l'objet possï¿½de le bon tag (ignore si le tag n'existe pas)
         if (gameObject.tag != "GameController")
         {
             try
@@ -39,7 +39,7 @@ public class GameController : MonoBehaviour
             }
             catch
             {
-                // Le tag "GameController" n'existe pas dans le projet — créez-le manuellement si besoin.
+                // Le tag "GameController" n'existe pas dans le projet ï¿½ crï¿½ez-le manuellement si besoin.
             }
         }
     }
@@ -51,7 +51,7 @@ public class GameController : MonoBehaviour
 
     private void OnDestroy()
     {
-        // Si l'application est en train de quitter, ne recréez rien ici.
+        // Si l'application est en train de quitter, ne recrï¿½ez rien ici.
         if (s_isQuitting) return;
 
         // Placez ici le nettoyage qui n'instancie pas de nouveaux GameObjects.
@@ -81,7 +81,6 @@ public class GameController : MonoBehaviour
     private void OnPlayerHealthChanged(int _playerHealth)
     {
         this.playerHealth += _playerHealth;
-        Finder.EventChannels.PublishPlayerHealthChanged(this.playerHealth);
     }
     
     public void RegisterPortal(Portal portal)

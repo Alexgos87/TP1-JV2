@@ -10,7 +10,7 @@ public class Missiles : MonoBehaviour
 {
     [Header("Projectile Settings")]
     [SerializeField] private float speed = 200; // Speed of the projectile
-    [SerializeField] private float damage = 10; // Damage of the projectile
+    [SerializeField] private int damage = 10; // Damage of the projectile
     [SerializeField] private float ExplosionRadius = 5f; // Radius of the explosion
 
 
@@ -47,7 +47,7 @@ public class Missiles : MonoBehaviour
             }
         }
 
-        Destroy(gameObject);
+        Finder.ObjectPools.MissileObjectPool.Release(gameObject);
     }
 }
 

@@ -14,24 +14,40 @@ public class SpaceMarinePlayer : MonoBehaviour
     [SerializeField] private InputActionReference shootBulletAction;
     [SerializeField] private InputActionReference shootMissileAction;
 
-    [Header("Bullet prefab")]
-    [SerializeField] private GameObject bulletPrefab;
-
-    [Header("Missiles prefab")]
-    [SerializeField] private GameObject missilePrefab;
-
-    [Header("SpawnProjectile")]
-    [SerializeField] private GameObject spawnpoint;
+    [Header("Projectiles")]
+    [SerializeField] private Transform projectileSpawnPoint;
+    private ObjectPool bulletPool;
+    private ObjectPool missilePool;
 
     private Camera camera;
     private CharacterController characterController;
     private float verticalVelocity = 0;
+
+    private int maxBullets = 50;
+    private int maxMissiles = 10;
 
 
     private void Awake()
     {
         camera = Camera.main;
         characterController = GetComponent<CharacterController>();
+        if (Finder.ObjectPools == null)
+        {
+            Debug.LogError("Finder.ObjectPools est null (GameController introuvable, composant absent, ou Finder pas encore initialisé).");
+            return;
+        }
+
+        bulletPool = Finder.ObjectPools.BulletObjectPools;
+        if (bulletPool == null)
+        {
+            Debug.LogError("ObjectPools existe, mais le champ 'BulletObjectPools' est null (non assigné ou pool pas encore créé).");
+        }
+        
+        missilePool = Finder.ObjectPools.MissileObjectPool;
+        if (missilePool == null)
+        {
+            Debug.LogError("ObjectPools existe, mais le champ 'MissileObjectPool' est null (non assigné ou pool pas encore créé).");
+        }
     }
 
     private void Update()
@@ -114,10 +130,11 @@ public class SpaceMarinePlayer : MonoBehaviour
     {
         if (shootBulletAction.action.triggered)
         {
-            //TO-DO : tirer un projectile en le créant à la position du joueur, avec la rotation du joueur.
-            var bullet = Instantiate(bulletPrefab);
-            bullet.transform.position = spawnpoint.transform.position;
-            bullet.transform.rotation = spawnpoint.transform.rotation;
+            if (bulletPool == null) return; // Defensive : évite les appels si le pool est manquant
+            if (bulletPool.ActiveCount < maxBullets)
+            {
+                bulletPool.Place(projectileSpawnPoint.position, projectileSpawnPoint.rotation);
+            }
         }
     }
 
@@ -136,10 +153,12 @@ public class SpaceMarinePlayer : MonoBehaviour
             if (gameController.canUseMissiles())
             {
                 //TO-DO : tirer un projectile en le créant à la position du joueur, avec la rotation du joueur.
-                var missle = Instantiate(missilePrefab);
-                missle.transform.position = spawnpoint.transform.position;
-                missle.transform.rotation = spawnpoint.transform.rotation;      
-                gameController.useMissles();
+                if (missilePool == null) return; // Defensive : évite les appels si le pool est manquant
+                if (missilePool.ActiveCount < maxMissiles)
+                {
+                    missilePool.Place(projectileSpawnPoint.position, projectileSpawnPoint.rotation);
+                    gameController.useMissles();
+                }  
             }
         }
     }

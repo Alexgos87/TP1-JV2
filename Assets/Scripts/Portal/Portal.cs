@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class Portal : MonoBehaviour, IHurtable
@@ -13,10 +12,6 @@ public class Portal : MonoBehaviour, IHurtable
         get => health;
         set => health = value;
     }
-
-
-
-
 
     private void Awake()
     {
@@ -71,16 +66,10 @@ public class Portal : MonoBehaviour, IHurtable
 
     public void SpawnAlien()
     {
-        alienPool ??= Finder.ObjectPools?.Alien;
         if (alienPool == null) return; // Defensive : évite les appels si le pool est manquant
         if (alienPool.ActiveCount < maxAlien)
         {
             alienPool.Place(transform.position);
         }
-    }
-
-    public void TakeDamage(float damage)
-    {
-        health -= Mathf.RoundToInt(damage);
     }
 }
