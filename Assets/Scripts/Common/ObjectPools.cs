@@ -9,14 +9,12 @@ public class ObjectPools : MonoBehaviour
 
     [Header("Fx")]
     [SerializeField] private ObjectPool alienExplosion;
+    [SerializeField] private ObjectPool missileExplosion;
+    [SerializeField] private ObjectPool portalExplosion;
 
     [Header("Projectiles")]
     [SerializeField] private ObjectPool missileObjectPools;
     [SerializeField] private ObjectPool bulletObjectPools;
-    [SerializeField] private ObjectPool missileExplosion;
-    
-    
-
     
     private static ObjectPools instance;
     private static ObjectPools Instance
@@ -31,13 +29,12 @@ public class ObjectPools : MonoBehaviour
     // Entities
     public ObjectPool Alien => alien;
 
-    // Fx
-    public ObjectPool AlienExplosion => alienExplosion;
-
     public ObjectPool MissileObjectPool => missileObjectPools;
-
-    // AlienPools
     public ObjectPool BulletObjectPools => bulletObjectPools;
     
+    // Fx
+    public ObjectPool AlienExplosion => alienExplosion;
     public ObjectPool MissileExplosion => missileExplosion;
+    public ObjectPool PortalExplosion => portalExplosion;
+    
 }

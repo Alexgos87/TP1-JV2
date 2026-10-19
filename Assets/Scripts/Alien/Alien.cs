@@ -32,6 +32,7 @@ public class Alien : MonoBehaviour, IHurtable
 
     private void Die()
     {
+        Finder.ObjectPools.AlienExplosion.Place(transform.position);
         Finder.ObjectPools.Alien.Release(gameObject);
         gameObject.SetActive(false);
     }

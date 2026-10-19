@@ -61,7 +61,11 @@ public class Portal : MonoBehaviour, IHurtable
     {
         health -= amount;
         if (health <= 0)
+        {
+            Finder.ObjectPools.PortalExplosion.Place(transform.position);
             gameObject.SetActive(false);
+        }
+            
     }
 
     public void SpawnAlien()

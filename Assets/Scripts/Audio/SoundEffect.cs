@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class MissileExplosionEffect : MonoBehaviour
+public class SoundEffect : MonoBehaviour
 {
     [SerializeField] private float duration = 3f;
 
