@@ -37,9 +37,9 @@ public class Alien : MonoBehaviour, IHurtable
         gameObject.SetActive(false);
     }
     
+    // Victoire ou défaite : tous les aliens meurent à la fin de la partie
     private void OnGameEnded(bool isVictory)
     {
-        if (isVictory)
-            Die();
+        Die();
     }
 }
