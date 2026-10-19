@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6003223505438865607}
   - component: {fileID: 1862986543241082657}
   - component: {fileID: 6163532077260417778}
+  - component: {fileID: 8835099844823081210}
   m_Layer: 0
   m_Name: AlienExplosion
   m_TagString: Untagged
@@ -4894,3 +4895,16 @@ ParticleSystemRenderer:
   m_MeshWeighting1: 1
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
+--- !u!114 &8835099844823081210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5486011068840166250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0be761da0a58ddd4ca20afe27b49a89f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MissileExplosionEffect
+  duration: 3

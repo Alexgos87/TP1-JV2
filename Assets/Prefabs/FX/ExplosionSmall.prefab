@@ -4918,6 +4918,7 @@ GameObject:
   - component: {fileID: 4441266138185142}
   - component: {fileID: 198175801688348628}
   - component: {fileID: 199922078765427110}
+  - component: {fileID: -7253116549053323095}
   m_Layer: 0
   m_Name: ExplosionSmall
   m_TagString: Untagged
@@ -9851,6 +9852,19 @@ ParticleSystemRenderer:
   m_MeshWeighting1: 1
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
+--- !u!114 &-7253116549053323095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1337198075554910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0be761da0a58ddd4ca20afe27b49a89f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MissileExplosionEffect
+  duration: 3
 --- !u!1 &1793989332680384
 GameObject:
   m_ObjectHideFlags: 0

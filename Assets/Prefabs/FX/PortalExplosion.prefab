@@ -9823,6 +9823,7 @@ GameObject:
   - component: {fileID: 3384366999043453945}
   - component: {fileID: 3384366999043453946}
   - component: {fileID: 3384366999043453947}
+  - component: {fileID: -6147397555506063553}
   m_Layer: 0
   m_Name: PortalExplosion
   m_TagString: Untagged
@@ -14740,6 +14741,19 @@ ParticleSystemRenderer:
   m_MeshWeighting1: 1
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
+--- !u!114 &-6147397555506063553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3384366999043453948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0be761da0a58ddd4ca20afe27b49a89f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MissileExplosionEffect
+  duration: 3
 --- !u!1 &3384366999421433560
 GameObject:
   m_ObjectHideFlags: 0

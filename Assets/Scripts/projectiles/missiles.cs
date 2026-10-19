@@ -46,7 +46,7 @@ public class Missiles : MonoBehaviour
                 hurtable.TakeDamage(damage);
             }
         }
-
+        Finder.ObjectPools.MissileExplosion.Place(transform.position);
         Finder.ObjectPools.MissileObjectPool.Release(gameObject);
     }
 }
