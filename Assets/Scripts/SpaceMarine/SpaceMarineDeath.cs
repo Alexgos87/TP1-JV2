@@ -3,6 +3,8 @@ using UnityEngine;
 public class SpaceMarineDeath : MonoBehaviour
 {
 
+    [SerializeField] private float pushForce = 5f;
+    
     private Animator animator;
     private CharacterController characterController;
 
@@ -31,6 +33,6 @@ public class SpaceMarineDeath : MonoBehaviour
         animator.enabled = false;
         characterController.enabled = false;
 
-        var body = gameObject.AddComponent<Rigidbody>();
+        gameObject.AddComponent<Rigidbody>();
     }
 }

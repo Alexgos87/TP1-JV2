@@ -1,19 +1,20 @@
-using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 /// <summary>
-///  bouge a 200 de vitesse et fait 1 de degat, est un trigger pour les collisions. 
+///  bouge a 200 de vitesse et fait un de degat, est un trigger pour les collisions. 
 /// </summary>
-public class Missiles : MonoBehaviour
+public class Missile : MonoBehaviour
 {
     [Header("Projectile Settings")]
     [SerializeField] private float speed = 200; // Speed of the projectile
     [SerializeField] private int damage = 10; // Damage of the projectile
-    [SerializeField] private float ExplosionRadius = 5f; // Radius of the explosion
+    [SerializeField] private float explosionRadius = 20f; // Radius of the explosion
 
-
+    private Collider[] results = new Collider[32];
+    private HashSet<IHurtable> damaged = new HashSet<IHurtable>();
+    
     private void FixedUpdate()
     {
         MoveProjectile();
@@ -25,18 +26,15 @@ public class Missiles : MonoBehaviour
     }
 
     /// <summary>
-    /// Déclanche un événement lorsqu'un projectile entre en collision avec un ennemi. Applique des dégâts à l'ennemi et détruit le projectile après la collision.
+    /// Dï¿½clanche un ï¿½vï¿½nement lorsqu'un projectile entre en collision avec un ennemi. Applique des dï¿½gï¿½ts ï¿½ l'ennemi et dï¿½truit le projectile aprï¿½s la collision.
     /// </summary>
     /// <param name="other">objet avec lequel le projectile entre en collision</param>
     private void OnTriggerEnter(Collider other)
     {
-        // Correction : OverlapSphereNonAlloc nécessite un tableau de résultats en argument
-        Collider[] results = new Collider[32]; // Taille arbitraire, à ajuster selon le besoin
-        int hitCount = Physics.OverlapSphereNonAlloc(transform.position, ExplosionRadius, results);
-
-        // Éviter de toucher deux fois le même objet s'il a plusieurs colliders
-        var damaged = new HashSet<IHurtable>();
-
+        // Correction : OverlapSphereNonAlloc nï¿½cessite un tableau de rï¿½sultats en argument
+        int hitCount = Physics.OverlapSphereNonAlloc(transform.position, explosionRadius, results);
+        
+        damaged.Clear();
         for (int i = 0; i < hitCount; i++)
         {
             Collider hit = results[i];

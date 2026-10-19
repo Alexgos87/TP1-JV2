@@ -1,9 +1,7 @@
-using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 /// <summary>
-///  bouge a 200 de vitesse et fait 1 de degat, est un trigger pour les collisions. 
+///  bouge a 200 de vitesse et fait un de degat, est un trigger pour les collisions. 
 /// </summary>
 public class Bullet : MonoBehaviour
 {
@@ -29,16 +27,10 @@ public class Bullet : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         // if collide with a IHurtable object, apply damage and destroy the projectile
-        if (other.TryGetComponent<IHurtable>(out IHurtable hurtable))
-        {
+        if (other.TryGetComponent<IHurtable>(out var hurtable))
             hurtable.TakeDamage(damage);
-            Finder.ObjectPools.BulletObjectPools.Release(gameObject);
-        }
-        else
-        {
-            // If it doesn't, destroy the projectile
-            Finder.ObjectPools.BulletObjectPools.Release(gameObject);
-        }
+
+        Finder.ObjectPools.BulletObjectPools.Release(gameObject);
     }
 
 

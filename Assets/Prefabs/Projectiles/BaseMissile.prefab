@@ -51,7 +51,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Missiles
   speed: 200
   damage: 10
-  ExplosionRadius: 5
+  explosionRadius: 20
 --- !u!135 &6806250326877243848
 SphereCollider:
   m_ObjectHideFlags: 0

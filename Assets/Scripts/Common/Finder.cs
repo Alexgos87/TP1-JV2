@@ -4,25 +4,25 @@
 //        Basez-vous sur le code existant.
 public static class Finder
 {
-    private static EventChannels eventChannels;
-    private static ObjectPools objectPools;
+    private static EventChannels _eventChannels;
+    private static ObjectPools _objectPools;
 
-    private static GameController gameController;
+    private static GameController _gameController;
 
     public static GameController GameController
     {
         get
         {
-            if (gameController == null)
-                gameController = Object.FindAnyObjectByType<GameController>();
+            if (_gameController == null)
+                _gameController = Object.FindAnyObjectByType<GameController>();
 
-            if (gameController == null)
+            if (_gameController == null)
             {
                 var gameControllerObject = new GameObject("GameController (Runtime)");
-                gameController = gameControllerObject.AddComponent<GameController>();
+                _gameController = gameControllerObject.AddComponent<GameController>();
             }
 
-            return gameController;
+            return _gameController;
         }
     }
 
@@ -30,19 +30,19 @@ public static class Finder
     {
         get
         {
-            if (eventChannels == null)
-                eventChannels = FindWithTag<EventChannels>("GameController");
-            return eventChannels;
+            if (_eventChannels == null)
+                _eventChannels = FindWithTag<EventChannels>("GameController");
+            return _eventChannels;
         }
     }
     public static ObjectPools ObjectPools
     {
         get
         {
-            if (objectPools == null)
-                objectPools = FindWithTag<ObjectPools>("ObjectPools")
-                    ?? Object.FindAnyObjectByType<ObjectPools>();
-            return objectPools;
+            if (_objectPools == null)
+                _objectPools = FindWithTag<ObjectPools>("ObjectPools")
+                               ?? Object.FindAnyObjectByType<ObjectPools>();
+            return _objectPools;
         }
     }
 

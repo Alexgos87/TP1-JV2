@@ -14,17 +14,17 @@ public class Music : MonoBehaviour
 
     private void OnEnable()
     {
-        Finder.EventChannels.OnGameEnded += PlayeEndGamMusic;
+        Finder.EventChannels.OnGameEnded += PlayEndGamMusic;
     }
 
     private void OnDisable()
     {
         var eventChannels = Finder.EventChannels;
         if (eventChannels != null)
-            eventChannels.OnGameEnded -= PlayeEndGamMusic;
+            eventChannels.OnGameEnded -= PlayEndGamMusic;
     }
 
-    private void PlayeEndGamMusic(bool isVictory)
+    private void PlayEndGamMusic(bool isVictory)
     {
         audioSource.clip = gameEndMusic;
         audioSource.loop = false;

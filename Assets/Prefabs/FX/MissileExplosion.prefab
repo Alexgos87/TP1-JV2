@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1351393344076530521}
   - component: {fileID: 5443760973385620037}
   - component: {fileID: 2156791996916494459}
+  - component: {fileID: -1845093116704835872}
   m_Layer: 0
   m_Name: MissileExplosion
   m_TagString: Untagged
@@ -5040,3 +5041,16 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-1845093116704835872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3404960581203129403}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0be761da0a58ddd4ca20afe27b49a89f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SoundEffect
+  duration: 3

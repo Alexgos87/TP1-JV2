@@ -16,7 +16,7 @@ public class GameController : MonoBehaviour
     private void Awake()
     {
         // Evite les doublons si vous avez plusieurs GameController dans la sc�ne
-        var others = FindObjectsOfType<GameController>();
+        var others = FindObjectsByType<GameController>();
         if (others.Length > 1)
         {
             Destroy(gameObject);
@@ -27,7 +27,7 @@ public class GameController : MonoBehaviour
         // DontDestroyOnLoad(gameObject);
 
         // Tentative de s'assurer que l'objet poss�de le bon tag (ignore si le tag n'existe pas)
-        if (gameObject.tag != "GameController")
+        if (gameObject.CompareTag("GameController"))
         {
             try
             {
@@ -96,7 +96,7 @@ public class GameController : MonoBehaviour
         }
     }
 
-    public void useMissles()
+    public void UseMissiles()
     {
         if (missilesNumber > 0)
         {
@@ -105,7 +105,7 @@ public class GameController : MonoBehaviour
         }
     }
 
-    public bool canUseMissiles()
+    public bool CanUseMissiles()
     {
         return missilesNumber > 0;
     }

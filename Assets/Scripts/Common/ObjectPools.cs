@@ -16,16 +16,6 @@ public class ObjectPools : MonoBehaviour
     [SerializeField] private ObjectPool missileObjectPools;
     [SerializeField] private ObjectPool bulletObjectPools;
     
-    private static ObjectPools instance;
-    private static ObjectPools Instance
-    {
-        get
-        {
-            if (instance == null) instance = GameObject.FindWithTag("ObjectPools").GetComponent<ObjectPools>();
-            return instance;
-        }
-    }
-    
     // Entities
     public ObjectPool Alien => alien;
 

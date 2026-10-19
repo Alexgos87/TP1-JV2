@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 
 // TODO : Ajouter tous vos canaux événementiels ici.
@@ -8,7 +7,7 @@ public class EventChannels : MonoBehaviour
 {
     [SerializeField] private UnityEvent<int> onPlayerHealthChanged = new();
     [Header("projectile events")]
-    [SerializeField] private UnityEvent<int> onNumberOfMisslesChanged = new();
+    [SerializeField] private UnityEvent<int> onNumberOfMissilesChanged = new();
     [Header("Game events")]
     [SerializeField] private UnityEvent<bool> onGameEnded = new();
     public event UnityAction<int> OnPlayerHealthChanged
@@ -17,10 +16,10 @@ public class EventChannels : MonoBehaviour
         remove => onPlayerHealthChanged.RemoveListener(value);
     }
 
-    public event UnityAction<int> OnNumberOfMisslesChanged
+    public event UnityAction<int> OnNumberOfMissilesChanged
     {
-        add => onNumberOfMisslesChanged.AddListener(value);
-        remove => onNumberOfMisslesChanged.RemoveListener(value);
+        add => onNumberOfMissilesChanged.AddListener(value);
+        remove => onNumberOfMissilesChanged.RemoveListener(value);
     }
     
     public event UnityAction<bool> OnGameEnded
@@ -36,7 +35,7 @@ public class EventChannels : MonoBehaviour
 
     public void PublishMissilesChanged(int missilesNumber)
     {
-        onNumberOfMisslesChanged.Invoke(missilesNumber);
+        onNumberOfMissilesChanged.Invoke(missilesNumber);
     }
     
     public void PublishGameEnded(bool isVictory)

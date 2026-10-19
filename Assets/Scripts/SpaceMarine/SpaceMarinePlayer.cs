@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class SpaceMarinePlayer : MonoBehaviour
@@ -11,6 +10,7 @@ public class SpaceMarinePlayer : MonoBehaviour
 
     [Header("Inputs")]
     [SerializeField] private InputActionReference moveAction;
+    [SerializeField] private InputActionReference jumpAction;
     [SerializeField] private InputActionReference shootBulletAction;
     [SerializeField] private InputActionReference shootMissileAction;
 
@@ -19,35 +19,20 @@ public class SpaceMarinePlayer : MonoBehaviour
     private ObjectPool bulletPool;
     private ObjectPool missilePool;
 
-    private Camera camera;
+    private Camera mainCamera;
     private CharacterController characterController;
-    private float verticalVelocity = 0;
+    private float verticalVelocity;
 
-    private int maxBullets = 50;
-    private int maxMissiles = 10;
+    const int MaxBullets = 50;
+    const int MaxMissiles = 10;
 
 
     private void Awake()
     {
-        camera = Camera.main;
+        mainCamera = Camera.main;
         characterController = GetComponent<CharacterController>();
-        if (Finder.ObjectPools == null)
-        {
-            Debug.LogError("Finder.ObjectPools est null (GameController introuvable, composant absent, ou Finder pas encore initialisé).");
-            return;
-        }
-
         bulletPool = Finder.ObjectPools.BulletObjectPools;
-        if (bulletPool == null)
-        {
-            Debug.LogError("ObjectPools existe, mais le champ 'BulletObjectPools' est null (non assigné ou pool pas encore créé).");
-        }
-        
         missilePool = Finder.ObjectPools.MissileObjectPool;
-        if (missilePool == null)
-        {
-            Debug.LogError("ObjectPools existe, mais le champ 'MissileObjectPool' est null (non assigné ou pool pas encore créé).");
-        }
     }
     
     private void OnEnable()
@@ -67,7 +52,7 @@ public class SpaceMarinePlayer : MonoBehaviour
         var horizontalMove = UpdateHorizontalMovement();
         var verticalMove = UpdateVerticalMovement();
         ShootBulletAction();
-        ShootMissles();
+        ShootMissiles();
 
         characterController.Move(horizontalMove + verticalMove);
     }
@@ -76,7 +61,7 @@ public class SpaceMarinePlayer : MonoBehaviour
     {
         // Obtenir différents vecteurs : forward (qui pointe où regarde la caméra) et right (qui pointe à droite d'où
         // regarde la caméra. C'est utile pour savoir dans quelle direction faire avancer le joueur.
-        var cameraTransform = camera.transform;
+        var cameraTransform = mainCamera.transform;
         var forward = cameraTransform.forward;
         var right = cameraTransform.right;
 
@@ -117,7 +102,7 @@ public class SpaceMarinePlayer : MonoBehaviour
 
         //get player infos
         var isGrounded = characterController.isGrounded;
-        var wantToJump = Input.GetKeyDown(KeyCode.Space); //TO-DO : changer pour input action
+        var wantToJump = jumpAction.action.WasPressedThisFrame();
 
         //si touche le sol, alors velocity = 0.
         if (isGrounded)
@@ -143,33 +128,31 @@ public class SpaceMarinePlayer : MonoBehaviour
         if (shootBulletAction.action.triggered)
         {
             if (bulletPool == null) return; // Defensive : évite les appels si le pool est manquant
-            if (bulletPool.ActiveCount < maxBullets)
+            if (bulletPool.ActiveCount < MaxBullets)
             {
                 bulletPool.Place(projectileSpawnPoint.position, projectileSpawnPoint.rotation);
             }
         }
     }
 
-    private void ShootMissles()
+    private void ShootMissiles()
     {
         if (shootMissileAction.action.triggered)
         {
-            Debug.Log("ShootMissles");
             var gameController = Finder.GameController;
             if (gameController == null)
             {
-                Debug.LogError("GameController not found");
                 return;
             }
 
-            if (gameController.canUseMissiles())
+            if (gameController.CanUseMissiles())
             {
                 //TO-DO : tirer un projectile en le créant à la position du joueur, avec la rotation du joueur.
                 if (missilePool == null) return; // Defensive : évite les appels si le pool est manquant
-                if (missilePool.ActiveCount < maxMissiles)
+                if (missilePool.ActiveCount < MaxMissiles)
                 {
                     missilePool.Place(projectileSpawnPoint.position, projectileSpawnPoint.rotation);
-                    gameController.useMissles();
+                    gameController.UseMissiles();
                 }  
             }
         }

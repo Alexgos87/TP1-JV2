@@ -11,7 +11,7 @@ public class SpaceMarineHealth : MonoBehaviour, IHurtable
 
     private int health;
 
-    public bool IsDead => health <= 0;
+    private bool IsDead => health <= 0;
 
     private AudioSource audioSource;
 
@@ -28,6 +28,7 @@ public class SpaceMarineHealth : MonoBehaviour, IHurtable
 
     public void TakeDamage(int damage)
     {
+        if (IsDead) return;
         health = Mathf.Max(health - damage, 0);
         Finder.EventChannels.PublishPlayerHealthChanged(health);
         audioSource.PlayOneShot(hurtSound);

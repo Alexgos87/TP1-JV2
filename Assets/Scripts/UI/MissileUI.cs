@@ -12,14 +12,14 @@ public class MissileUI : MonoBehaviour
 
     private void OnEnable()
     {
-        Finder.EventChannels.OnNumberOfMisslesChanged += UpdateMissiles;
+        Finder.EventChannels.OnNumberOfMissilesChanged += UpdateMissiles;
     }
 
     private void OnDisable()
     {
         var eventChannels = Finder.EventChannels;
         if (eventChannels != null)
-            eventChannels.OnNumberOfMisslesChanged -= UpdateMissiles;
+            eventChannels.OnNumberOfMissilesChanged -= UpdateMissiles;
     }
 
     private void UpdateMissiles(int missiles)

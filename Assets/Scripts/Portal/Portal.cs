@@ -7,35 +7,16 @@ public class Portal : MonoBehaviour, IHurtable
     private ObjectPool alienPool;
     private int health;
 
-    public int Health
-    {
-        get => health;
-        set => health = value;
-    }
-
     private void Awake()
     {
         health = maxHealth;
 
         if (Finder.ObjectPools == null)
         {
-            Debug.LogError("Finder.ObjectPools est null (GameController introuvable, composant absent, ou Finder pas encore initialisé).");
             return;
         }
 
         alienPool = Finder.ObjectPools.Alien;
-        if (alienPool == null)
-        {
-            Debug.LogError("ObjectPools existe, mais le champ 'Alien' est null (non assigné ou pool pas encore créé).");
-        }
-    }
-
-    private void Update()
-    {
-        if (Health <= 0)
-        {
-            this.gameObject.SetActive(false);
-        }
     }
 
     private void OnEnable()
@@ -45,8 +26,6 @@ public class Portal : MonoBehaviour, IHurtable
         var gameController = Finder.GameController;
         if (gameController != null)
             gameController.RegisterPortal(this);
-        else
-            Debug.LogWarning("GameController introuvable dans OnEnable : portail non enregistr�.", this);
     }
 
     private void OnDisable()

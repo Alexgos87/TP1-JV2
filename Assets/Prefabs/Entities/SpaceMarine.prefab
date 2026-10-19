@@ -493,6 +493,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8794325722518711364}
   - component: {fileID: 1485245595387287146}
+  - component: {fileID: 1558042149733993848}
+  - component: {fileID: 8315498715863778116}
   m_Layer: 0
   m_Name: Head
   m_TagString: Untagged
@@ -538,6 +540,45 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 3.5
   m_Center: {x: 0, y: 2.4, z: -0.3}
+--- !u!114 &1558042149733993848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 895154713286032092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29b0fc7d3570bcb45bde26cf43eef5c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceMarineHead
+--- !u!54 &8315498715863778116
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 895154713286032092}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &947761660832414574
 GameObject:
   m_ObjectHideFlags: 0
@@ -1938,6 +1979,7 @@ GameObject:
   - component: {fileID: 7503245310737277860}
   - component: {fileID: 8356389352513026036}
   - component: {fileID: 4172171158148998239}
+  - component: {fileID: 954266050264971302}
   m_Layer: 0
   m_Name: SpaceMarine
   m_TagString: Player
@@ -2042,6 +2084,8 @@ MonoBehaviour:
   rotationSpeed: 30
   jumpHeight: 10
   moveAction: {fileID: -888810244224002545, guid: 04cc15706f63de54b99fedd88a3cbe71,
+    type: 3}
+  jumpAction: {fileID: 968748681875459163, guid: 04cc15706f63de54b99fedd88a3cbe71,
     type: 3}
   shootBulletAction: {fileID: 4714841854826018829, guid: 04cc15706f63de54b99fedd88a3cbe71,
     type: 3}
@@ -2184,6 +2228,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &954266050264971302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3829029035087176954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddce0ebc0c605c64f8c4b99bcbc4e879, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceMarineDeath
+  pushForce: 5
 --- !u!1 &4063720449136232020
 GameObject:
   m_ObjectHideFlags: 0

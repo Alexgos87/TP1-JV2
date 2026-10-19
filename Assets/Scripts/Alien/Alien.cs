@@ -32,9 +32,9 @@ public class Alien : MonoBehaviour, IHurtable
 
     private void Die()
     {
+        if (!gameObject.activeSelf) return;
         Finder.ObjectPools.AlienExplosion.Place(transform.position);
         Finder.ObjectPools.Alien.Release(gameObject);
-        gameObject.SetActive(false);
     }
     private void OnGameEnded(bool isVictory)
     {
